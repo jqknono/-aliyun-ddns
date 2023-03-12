@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- Debug -->
+    <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <!-- Release -->
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <AssemblyName>ddns</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="aliyun-net-sdk-alidns" Version="2.6.32" />
+        <PackageReference Include="aliyun-net-sdk-core" Version="1.5.11" />
+    </ItemGroup>
+
+</Project>
