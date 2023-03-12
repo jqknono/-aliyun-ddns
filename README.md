@@ -9,7 +9,7 @@
 
 ## 用法
 
-1. 下载 [Release]()
+1. 下载 [Release](https://github.com/jqknono/aliyun-ddns/releases)
 2. 配置参数运行, `ddns <list | update> -id <AccessKey ID> -key <AccessKey> -domain <domain> [-subdomain <subdomain>] [-record_id <record_id>]`
    - e.g. `ddns update -id LTAI5tLa55eddic4BKU2LmUi -key w4IcEzgEVbb8ErXd9ghxtZbJfkHIoi -domain jqknono.com -subdomain zhangsanshome`
 
