@@ -49,7 +49,7 @@
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
-        <AssemblyName>ddns.linux</AssemblyName>
+        <AssemblyName>ddns.arm</AssemblyName>
         <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
         <OutputPath>release</OutputPath>
         <DebugSymbols>false</DebugSymbols>

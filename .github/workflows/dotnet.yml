@@ -22,8 +22,8 @@ jobs:
         run: dotnet restore
       - name: Publish win-x64
         run: dotnet publish -c win-x64
-      - name: Publish linux-arm64
-        run: dotnet publish -c linux-arm64
+      - name: Publish linux-x64
+        run: dotnet publish -c linux-x64
       - name: Publish linux-arm64
         run: dotnet publish -c linux-arm64
       - name: Publish osx-x64
