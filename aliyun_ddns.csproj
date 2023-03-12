@@ -8,8 +8,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <!-- Release -->
-    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <!-- win-x64 -->
+    <PropertyGroup Condition="'$(Configuration)'=='win-x64'">
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -18,6 +18,46 @@
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
         <AssemblyName>ddns</AssemblyName>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    </PropertyGroup>
+
+    <!-- linux-x64 -->
+    <PropertyGroup Condition="'$(Configuration)'=='linux-x64'">
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <AssemblyName>ddns</AssemblyName>
+        <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    </PropertyGroup>
+
+    <!-- Arm64 -->
+    <PropertyGroup Condition="'$(Configuration)'=='linux-arm64'">
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <AssemblyName>ddns</AssemblyName>
+        <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
+    </PropertyGroup>
+
+    <!-- osx-x64 -->
+    <PropertyGroup Condition="'$(Configuration)'=='osx-x64'">
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <AssemblyName>ddns</AssemblyName>
+        <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
     </PropertyGroup>
 
     <ItemGroup>

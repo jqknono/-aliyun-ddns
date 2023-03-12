@@ -4,7 +4,8 @@
 
 ## 特性
 
-- 更新新设备的 IPv6 地址解析
+- 更新设备的 IPv6 地址解析
+- 支持Windows/Linux/MacOS, 无需Docker
 
 ## 用法
 

@@ -15,7 +15,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publish-win-x64",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -23,7 +23,46 @@
                 "${workspaceFolder}/aliyun_ddns.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
-                "/property:Configuration=Release"
+                "/property:Configuration=win-x64"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish-linux-x64",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/aliyun_ddns.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/property:Configuration=linux-x64"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish-linux-arm64",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/aliyun_ddns.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/property:Configuration=linux-arm64"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish-osx-x64",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/aliyun_ddns.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary",
+                "/property:Configuration=osx-x64"
             ],
             "problemMatcher": "$msCompile"
         },

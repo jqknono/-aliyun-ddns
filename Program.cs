@@ -6,7 +6,7 @@
         {
             string help_str = "Usage: ddns <list | update> -id <AccessKey ID> -key <AccessKey> -domain <domain> [-subdomain <subdomain>] [-record_id <record_id>]";
             int argc = args.Length;
-            if (argc < 9)
+            if (argc < 7)
             {
                 Console.WriteLine(help_str);
                 return;
