@@ -19,6 +19,9 @@
         <PublishTrimmed>true</PublishTrimmed>
         <AssemblyName>ddns</AssemblyName>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <OutputPath>release</OutputPath>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
     </PropertyGroup>
 
     <!-- linux-x64 -->
@@ -30,11 +33,14 @@
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
-        <AssemblyName>ddns</AssemblyName>
+        <AssemblyName>ddns.linux</AssemblyName>
         <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+        <OutputPath>release</OutputPath>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
     </PropertyGroup>
 
-    <!-- Arm64 -->
+    <!-- linux-arm64 -->
     <PropertyGroup Condition="'$(Configuration)'=='linux-arm64'">
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
@@ -43,8 +49,11 @@
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
-        <AssemblyName>ddns</AssemblyName>
+        <AssemblyName>ddns.linux</AssemblyName>
         <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
+        <OutputPath>release</OutputPath>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
     </PropertyGroup>
 
     <!-- osx-x64 -->
@@ -56,8 +65,11 @@
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
-        <AssemblyName>ddns</AssemblyName>
+        <AssemblyName>ddns.macos</AssemblyName>
         <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
+        <OutputPath>release</OutputPath>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
     </PropertyGroup>
 
     <ItemGroup>

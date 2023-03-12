@@ -5,44 +5,34 @@ name: Release
 
 on:
   push:
-    tags: [ "release-*" ]
+    tags: ["*"]
 
 jobs:
   release:
-
     runs-on: ubuntu-latest
     permissions:
-      packages: write
-      contents: read
+      contents: write
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Publish win-x64 
-      run: dotnet publish -c win-x64 
-    - name: Create release
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-            try {
-              const response = await github.rest.repos.createRelease({
-                draft: false,
-                generate_release_notes: true,
-                name: process.env.RELEASE_TAG,
-                owner: context.repo.owner,
-                prerelease: false,
-                repo: context.repo.repo,
-                tag_name: process.env.RELEASE_TAG,
-              });
-
-              core.exportVariable('RELEASE_ID', response.data.id);
-              core.exportVariable('RELEASE_UPLOAD_URL', response.data.upload_url);
-            } catch (error) {
-              core.setFailed(error.message);
-            }
-    
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Publish win-x64
+        run: dotnet publish -c win-x64
+      - name: Publish linux-arm64
+        run: dotnet publish -c linux-arm64
+      - name: Publish linux-arm64
+        run: dotnet publish -c linux-arm64
+      - name: Publish osx-x64
+        run: dotnet publish -c osx-x64
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release/net6.0/win-x64/publish/*
+            release/net6.0/osx-x64/publish/*
+            release/net6.0/linux-x64/publish/*
+            release/net6.0/linux-arm64/publish/*
