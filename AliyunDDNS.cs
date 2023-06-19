@@ -82,9 +82,7 @@ public class AliyunDDNSUpdater
             });
         Task<string>[] tasks =
         {
-                client.GetStringAsync("https://ip6.seeip.org"),
                 client.GetStringAsync("https://6.ipw.cn"),
-                client.GetStringAsync("https://ipv6.icanhazip.com"),
                 client.GetStringAsync("https://api64.ipify.org"),
                 client.GetStringAsync("https://ifconfig.co/ip"),
             };
