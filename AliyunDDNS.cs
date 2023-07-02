@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using static Aliyun.Acs.Alidns.Model.V20150109.DescribeDomainRecordsResponse;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 public class AliyunDDNSUpdater
 {
@@ -44,6 +46,62 @@ public class AliyunDDNSUpdater
 
         // add record if not found
         return AddRecord();
+    }
+
+    public static string GetIPv6Locally()
+    {
+        List<Tuple<string, long>> ipv6s = new List<Tuple<string, long>>();
+        // get all network interfaces
+        NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+
+        // get all IP addresses
+        foreach (NetworkInterface adapter in adapters)
+        {
+            IPInterfaceProperties adapterProperties = adapter.GetIPProperties();
+            UnicastIPAddressInformationCollection unicastIPAddresses = adapterProperties.UnicastAddresses;
+
+            // get IPv6 address
+            foreach (UnicastIPAddressInformation unicastIPAddress in unicastIPAddresses)
+            {
+                // discard addresses that are not IPv6
+                if (unicastIPAddress.Address.AddressFamily != AddressFamily.InterNetworkV6)
+                    continue;
+                // discard addresses
+                if (unicastIPAddress.Address.IsIPv4MappedToIPv6 || unicastIPAddress.Address.IsIPv6LinkLocal || unicastIPAddress.Address.IsIPv6Multicast || unicastIPAddress.Address.IsIPv6SiteLocal || unicastIPAddress.Address.IsIPv6Teredo || unicastIPAddress.Address.IsIPv6UniqueLocal)
+                    continue;
+
+                // discard the loopback address, unspecified address
+                if (unicastIPAddress.Address.ToString().StartsWith("::1") || unicastIPAddress.Address.ToString().StartsWith("::"))
+                    continue;
+
+
+                // if platform is win, select the longest AddressPreferredLifetime, AddressValidLifetime
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    // discard random address
+                    // if (unicastIPAddress.SuffixOrigin == SuffixOrigin.Random)
+                    //     continue;
+                    ipv6s.Add(new Tuple<string, long>(unicastIPAddress.Address.ToString(), unicastIPAddress.AddressPreferredLifetime));
+                }
+                else
+                {
+                    ipv6s.Add(new Tuple<string, long>(unicastIPAddress.Address.ToString(), unicastIPAddress.PrefixLength));
+                }
+            }
+        }
+
+        string ipv6 = "";
+        long min = long.MaxValue;
+        foreach (Tuple<string, long> ipv6Info in ipv6s)
+        {
+            if (ipv6Info.Item2 < min)
+            {
+                ipv6 = ipv6Info.Item1;
+                min = ipv6Info.Item2;
+            }
+        }
+
+        return ipv6;
     }
 
     public static string GetIPv6()
@@ -174,7 +232,11 @@ public class AliyunDDNSUpdater
 
     private bool UpdateRecord(DescribeDomainRecords_Record? record = null)
     {
-        string ip = GetIPv6();
+        string ip = GetIPv6Locally();
+        if (string.IsNullOrEmpty(ip))
+        {
+            ip = GetIPv6();
+        }
         if (string.IsNullOrEmpty(ip))
         {
             Console.WriteLine("[Error]Can not get ipv6 address, check your network connection.");
@@ -187,7 +249,7 @@ public class AliyunDDNSUpdater
             return true;
         }
 
-        Console.WriteLine("Update subDomain:" + config.SubDomain + "." + config.Domain + " to=>[" + ip + "]");
+        Console.WriteLine("Update SubDomain:" + config.SubDomain + "." + config.Domain + " to=>[" + ip + "]");
 
         if (string.IsNullOrEmpty(record?.RecordId) && string.IsNullOrEmpty(config.RecordId))
         {
@@ -217,14 +279,18 @@ public class AliyunDDNSUpdater
 
     private bool AddRecord()
     {
-        string ip = GetIPv6();
+        string ip = GetIPv6Locally();
+        if (string.IsNullOrEmpty(ip))
+        {
+            ip = GetIPv6();
+        }
         if (string.IsNullOrEmpty(ip))
         {
             Console.WriteLine("Can not get ipv6 address.");
             return false;
         }
 
-        Console.WriteLine("Add subDomain:" + config.SubDomain + "." + config.Domain + " to=>[" + ip + "]");
+        Console.WriteLine("Add SubDomain:" + config.SubDomain + "." + config.Domain + " to=>[" + ip + "]");
 
         AddDomainRecordRequest request = new()
         {
