@@ -24,6 +24,22 @@
         <DebugType>None</DebugType>
     </PropertyGroup>
 
+    <!-- win-arm64 -->
+    <PropertyGroup Condition="'$(Configuration)'=='win-arm64'">
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <AssemblyName>ddns.arm</AssemblyName>
+        <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
+        <OutputPath>release</OutputPath>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
+    </PropertyGroup>
+
     <!-- linux-x64 -->
     <PropertyGroup Condition="'$(Configuration)'=='linux-x64'">
         <OutputType>Exe</OutputType>
@@ -33,7 +49,7 @@
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
-        <AssemblyName>ddns.linux</AssemblyName>
+        <AssemblyName>ddns.linux.x64</AssemblyName>
         <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
         <OutputPath>release</OutputPath>
         <DebugSymbols>false</DebugSymbols>
@@ -49,7 +65,7 @@
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
-        <AssemblyName>ddns.arm</AssemblyName>
+        <AssemblyName>ddns.linux.arm</AssemblyName>
         <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
         <OutputPath>release</OutputPath>
         <DebugSymbols>false</DebugSymbols>
@@ -65,8 +81,24 @@
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>true</SelfContained>
         <PublishTrimmed>true</PublishTrimmed>
-        <AssemblyName>ddns.macos</AssemblyName>
+        <AssemblyName>ddns.macos.x64</AssemblyName>
         <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
+        <OutputPath>release</OutputPath>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
+    </PropertyGroup>
+
+    <!-- osx-arm64 -->
+    <PropertyGroup Condition="'$(Configuration)'=='osx-arm64'">
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <AssemblyName>ddns.macos.arm</AssemblyName>
+        <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
         <OutputPath>release</OutputPath>
         <DebugSymbols>false</DebugSymbols>
         <DebugType>None</DebugType>

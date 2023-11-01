@@ -19,20 +19,26 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore aliyun_ddns.csproj
       - name: Publish win-x64
-        run: dotnet publish -c win-x64
+        run: dotnet publish aliyun_ddns.csproj -c win-x64
+      - name: Publish win-arm64
+        run: dotnet publish aliyun_ddns.csproj -c win-arm64
       - name: Publish linux-x64
-        run: dotnet publish -c linux-x64
+        run: dotnet publish aliyun_ddns.csproj -c linux-x64
       - name: Publish linux-arm64
-        run: dotnet publish -c linux-arm64
+        run: dotnet publish aliyun_ddns.csproj -c linux-arm64
       - name: Publish osx-x64
-        run: dotnet publish -c osx-x64
+        run: dotnet publish aliyun_ddns.csproj -c osx-x64
+      - name: Publish osx-arm64
+        run: dotnet publish aliyun_ddns.csproj -c osx-arm64
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
           files: |
             release/net6.0/win-x64/publish/*
+            release/net6.0/win-arm64/publish/*
             release/net6.0/osx-x64/publish/*
+            release/net6.0/osx-arm64/publish/*
             release/net6.0/linux-x64/publish/*
             release/net6.0/linux-arm64/publish/*
