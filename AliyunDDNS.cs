@@ -57,6 +57,14 @@ public class AliyunDDNSUpdater
         // get all IP addresses
         foreach (NetworkInterface adapter in adapters)
         {
+            if (adapter.NetworkInterfaceType != NetworkInterfaceType.Ethernet && adapter.NetworkInterfaceType != NetworkInterfaceType.Wireless80211)
+            {
+                continue;
+            }
+            if (adapter.OperationalStatus != OperationalStatus.Up)
+            {
+                continue;
+            }
             IPInterfaceProperties adapterProperties = adapter.GetIPProperties();
             UnicastIPAddressInformationCollection unicastIPAddresses = adapterProperties.UnicastAddresses;
 
@@ -91,13 +99,13 @@ public class AliyunDDNSUpdater
         }
 
         string ipv6 = "";
-        long min = long.MaxValue;
+        long max = long.MinValue;
         foreach (Tuple<string, long> ipv6Info in ipv6s)
         {
-            if (ipv6Info.Item2 < min)
+            if (ipv6Info.Item2 > max)
             {
                 ipv6 = ipv6Info.Item1;
-                min = ipv6Info.Item2;
+                max = ipv6Info.Item2;
             }
         }
 
@@ -142,7 +150,6 @@ public class AliyunDDNSUpdater
         {
                 client.GetStringAsync("https://6.ipw.cn"),
                 client.GetStringAsync("https://api64.ipify.org"),
-                client.GetStringAsync("https://ifconfig.co/ip"),
             };
         try
         {
