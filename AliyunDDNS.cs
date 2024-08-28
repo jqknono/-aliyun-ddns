@@ -148,6 +148,7 @@ public class AliyunDDNSUpdater
             });
         Task<string>[] tasks =
         {
+                client.GetStringAsync("https://ip.jqknono.com"),
                 client.GetStringAsync("https://6.ipw.cn"),
                 client.GetStringAsync("https://api64.ipify.org"),
             };
@@ -239,10 +240,10 @@ public class AliyunDDNSUpdater
 
     private bool UpdateRecord(DescribeDomainRecords_Record? record = null)
     {
-        string ip = GetIPv6Locally();
+        string ip = GetIPv6();
         if (string.IsNullOrEmpty(ip))
         {
-            ip = GetIPv6();
+            ip = GetIPv6Locally();
         }
         if (string.IsNullOrEmpty(ip))
         {
