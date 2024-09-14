@@ -148,7 +148,7 @@ public class AliyunDDNSUpdater
             });
         Task<string>[] tasks =
         {
-                client.GetStringAsync("https://ip.jqknono.com/ip"),
+                client.GetStringAsync("http://ip.jqknono.com:30000/ip"),
                 client.GetStringAsync("https://6.ipw.cn"),
                 client.GetStringAsync("https://api64.ipify.org"),
             };
