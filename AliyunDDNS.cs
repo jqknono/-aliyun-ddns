@@ -22,26 +22,20 @@ public class AliyunDDNSUpdater
 
     public bool UpdateDNS()
     {
-        int page = 1;
-        List<DescribeDomainRecords_Record>? records = GetRecords(page);
-
-        if (records == null)
+        List<DescribeDomainRecords_Record> records = GetAllRecords();
+        
+        if (records.Count == 0)
         {
             return UpdateRecord();
         }
 
-        while (records != null && records.Count != 0)
+        foreach (DescribeDomainRecords_Record record in records)
         {
-            foreach (DescribeDomainRecords_Record record in records)
+            if (record.DomainName == config.Domain && record.RR == config.SubDomain)
             {
-                if (record.DomainName == config.Domain && record.RR == config.SubDomain)
-                {
-                    // update the record if found
-                    return UpdateRecord(record);
-                }
+                // update the record if found
+                return UpdateRecord(record);
             }
-
-            records = GetRecords(++page);
         }
 
         // add record if not found
@@ -99,13 +93,23 @@ public class AliyunDDNSUpdater
         }
 
         string ipv6 = "";
-        long max = long.MinValue;
+        // by AddressPreferredLifetime
+        // long max = long.MinValue;
+        // foreach (Tuple<string, long> ipv6Info in ipv6s)
+        // {
+        //     if (ipv6Info.Item2 > max)
+        //     {
+        //         ipv6 = ipv6Info.Item1;
+        //         max = ipv6Info.Item2;
+        //     }
+        // }
+        int shortest = int.MaxValue;
         foreach (Tuple<string, long> ipv6Info in ipv6s)
         {
-            if (ipv6Info.Item2 > max)
+            if (ipv6Info.Item1.Length < shortest)
             {
                 ipv6 = ipv6Info.Item1;
-                max = ipv6Info.Item2;
+                shortest = ipv6Info.Item1.Length;
             }
         }
 
@@ -148,8 +152,9 @@ public class AliyunDDNSUpdater
             });
         Task<string>[] tasks =
         {
-                client.GetStringAsync("http://ip.jqknono.com:30000/ip"),
                 client.GetStringAsync("https://6.ipw.cn"),
+                client.GetStringAsync("https://ip.jqknono.com"),
+                client.GetStringAsync("https://ip.techfetch.dev"),
                 client.GetStringAsync("https://api64.ipify.org"),
             };
         try
@@ -180,11 +185,7 @@ public class AliyunDDNSUpdater
         DescribeDomainRecordsRequest request = new()
         {
             DomainName = config.Domain,
-#if DEBUG
-            PageSize = 10,
-#else
-            PageSize = 50,
-#endif
+            PageSize = 500,  // 增加每页记录数以减少查询次数
             PageNumber = page,
             Type = "AAAA",
             Status = "ENABLE"
@@ -240,11 +241,21 @@ public class AliyunDDNSUpdater
 
     private bool UpdateRecord(DescribeDomainRecords_Record? record = null)
     {
-        string ip = GetIPv6();
-        if (string.IsNullOrEmpty(ip))
+        string ip;
+        if (config.IpMode == "local")
         {
             ip = GetIPv6Locally();
         }
+        else
+        {
+            ip = GetIPv6();
+            if (string.IsNullOrEmpty(ip))
+            {
+                Console.WriteLine("[WARN] Failed to get IP from network, falling back to local mode.");
+                ip = GetIPv6Locally();
+            }
+        }
+
         if (string.IsNullOrEmpty(ip))
         {
             Console.WriteLine("[Error]Can not get ipv6 address, check your network connection.");
@@ -287,11 +298,21 @@ public class AliyunDDNSUpdater
 
     private bool AddRecord()
     {
-        string ip = GetIPv6();
-        if (string.IsNullOrEmpty(ip))
+        string ip;
+        if (config.IpMode == "local")
         {
             ip = GetIPv6Locally();
         }
+        else
+        {
+            ip = GetIPv6();
+            if (string.IsNullOrEmpty(ip))
+            {
+                Console.WriteLine("[WARN] Failed to get IP from network, falling back to local mode.");
+                ip = GetIPv6Locally();
+            }
+        }
+
         if (string.IsNullOrEmpty(ip))
         {
             Console.WriteLine("Can not get ipv6 address.");

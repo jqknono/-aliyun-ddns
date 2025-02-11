@@ -4,7 +4,7 @@
     {
         public static void Main(string[] args)
         {
-            string help_str = "Usage: ddns <list | update> -id <AccessKey ID> -key <AccessKey> -domain <domain> [-subdomain <subdomain>] [-record_id <record_id>]";
+            string help_str = "Usage: ddns <list | update> -id <AccessKey ID> -secret <AccessKey Secret> -domain <domain> [-subdomain <subdomain>] [-record_id <record_id>] [-mode <local|net>]";
             int argc = args.Length;
             if (argc < 7)
             {
@@ -17,6 +17,7 @@
             string domain = string.Empty;
             string subDomain = string.Empty;
             string? recordId = null;
+            string ipMode = "local";  // 修改默认值为 local
 
             string command = args[0];
             if (command != "list" && command != "update")
@@ -34,7 +35,7 @@
                         case "-id":
                             id = args[++i];
                             break;
-                        case "-key":
+                        case "-secret":
                             secret = args[++i];
                             break;
                         case "-domain":
@@ -45,6 +46,15 @@
                             break;
                         case "-record_id":
                             recordId = args[++i];
+                            break;
+                        case "-mode":
+                            string mode = args[++i].ToLower();
+                            if (mode != "local" && mode != "net")
+                            {
+                                Console.WriteLine("Invalid mode. Use 'local' or 'net'.");
+                                return;
+                            }
+                            ipMode = mode;
                             break;
                         default:
                             break;
@@ -63,7 +73,7 @@
             }
 
             AccessKey accessKey = new(id, secret);
-            ServiceConfiguration config = new(domain, accessKey, subDomain, recordId);
+            ServiceConfiguration config = new(domain, accessKey, subDomain, recordId, ipMode);
 
             var ddns = new AliyunDDNSUpdater(config);
 

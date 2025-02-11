@@ -55,11 +55,15 @@ public class ServiceConfiguration
     public string Type { get; set; } = "AAAA";
     public string? RecordId { get; internal set; }
 
-    public ServiceConfiguration(string domain, AccessKey accessKey, string subDomain, string? recordId = null)
+    [DataMember]
+    public string IpMode { get; set; } = "local";  // 默认使用本地方式获取IP
+
+    public ServiceConfiguration(string domain, AccessKey accessKey, string subDomain, string? recordId = null, string ipMode = "local")
     {
         Domain = domain;
         AccessKey = accessKey;
         SubDomain = subDomain;
         RecordId = recordId;
+        IpMode = ipMode;
     }
 }

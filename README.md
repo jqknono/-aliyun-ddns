@@ -10,8 +10,8 @@
 ## 用法
 
 1. 下载 [Release](https://github.com/jqknono/aliyun-ddns/releases)
-2. 配置参数运行, `ddns <list | update> -id <AccessKey ID> -key <AccessKey> -domain <domain> [-subdomain <subdomain>] [-record_id <record_id>]`
-   - e.g. `ddns update -id LTAI5tLa55eddic4BKU2LmUi -key w4IcEzgEVbb8ErXd9ghxtZbJfkHIoi -domain jqknono.com -subdomain zhangsanshome`
+2. 配置参数运行, `ddns <list | update> -id <AccessKey ID> -secret <AccessKey Secret> -domain <domain> [-subdomain <subdomain>] [-record_id <record_id>] -mode local`
+   - e.g. `ddns update -id LTAI5tLa55eddic4BKU2LmUi -secret w4IcEzgEVbb8ErXd9ghxtZbJfkHIoi -domain jqknono.com -subdomain zhangsanshome`
 
 ## 安全性说明
 
@@ -43,7 +43,7 @@
 - 邮件联系: [jqknono@gmail.com](mailto:jqknono@gmail.com), 说明需要的域名.
 - 获取一个二级域名, 如 `zhangsanshome.jqknono.com`
 - 获得该二级域名解析的记录id: `817133929644410109110`
-  - 使用**Aliyun-DDNS**更新解析记录, `ddns update -id LTAI5tLa55eddic4BKU2LmUi -key w4IcEzgEVbb8ErXd9ghxtZbJfkHIoi -domain jqknono.com -record_id 817133929644410109110`
+  - 使用**Aliyun-DDNS**更新解析记录, `ddns update -id LTAI5tLa55eddic4BKU2LmUi -secret w4IcEzgEVbb8ErXd9ghxtZbJfkHIoi -domain jqknono.com -record_id 817133929644410109110`
 - 获得设置开机自启设置命令, 定时更新任务设置命令
 - 解析成功后付费
 -->

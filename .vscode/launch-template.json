@@ -12,22 +12,21 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/bin/Debug/net6.0/aliyun_ddns.dll",
             "args": [
-                "list",
+                "update",
                 "-id",
-                "1514453461345",
-                "-key",
-                "asvrfdhjhgdnukasasdasbh",
+                "${env:ALIYUN_ACCESS_KEY_ID}",
+                "-secret",
+                "${env:ALIYUN_ACCESS_KEY_SECRET}",
                 "-domain",
-                "jqknono.com",
+                "${env:DOMAIN}",
                 "-subdomain",
-                "zhangsanshome",
-                "-record_id",
-                "817469704062995456"
+                "${env:SUBDOMAIN}",
+                "-mode",
+                "local"
             ],
             "cwd": "${workspaceFolder}",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": true
         },
         {
             "name": ".NET Core Attach",

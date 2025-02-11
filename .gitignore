@@ -1,4 +1,5 @@
 obj/
 bin/
 release/
-.vscode
+.env
+.vscode/launch.json
